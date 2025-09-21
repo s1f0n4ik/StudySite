@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс по медицинской инженерии</title>
+    <!-- Подключаем стили Bootstrap 5 для красивого вида -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Небольшие дополнительные стили */
+        body { padding-top: 56px; }
+        section { padding: 60px 0; }
+        .speaker-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Мед. Инженерия</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#program">Программа</a></li>
+                <li class="nav-item"><a class="nav-link" href="#speakers">Спикеры</a></li>
+                <li class="nav-item"><a class="nav-link" href="#location">Место</a></li>
+                <li class="nav-item"><a class="nav-link" href="#register">Регистрация</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contacts">Контакты</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Главный блок -->
+<header class="py-5 bg-light">
+    <div class="container text-center">
+        <h1 class="fw-bolder">Обучение созданию проекта в медицинской инженерии</h1>
+        <p class="lead">Даты проведения: 21 сентября - 1 октября 2025</p>
+        <a class="btn btn-primary btn-lg" href="#register">Записаться на курс</a>
+    </div>
+</header>
+
+<!-- Программа курса -->
+<section id="program">
+    <div class="container">
+        <h2 class="text-center mb-5">Программа курса</h2>
+        <div class="accordion" id="programAccordion">
+            {% for module in program_modules %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ module.id }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ module.id }}">
+                        {{ module.title }}
+                    </button>
+                </h2>
+                <div id="collapse{{ module.id }}" class="accordion-collapse collapse" data-bs-parent="#programAccordion">
+                    <div class="accordion-body">
+                        {{ module.description|linebreaks }}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">Программа курса скоро будет добавлена.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Спикеры -->
+<section id="speakers" class="bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Спикеры</h2>
+        <div class="row text-center">
+            {% for speaker in speakers %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="{{ speaker.photo.url }}" alt="Фото {{ speaker.full_name }}" class="speaker-img mb-3">
+                <h4>{{ speaker.full_name }}</h4>
+                <p class="text-muted">{{ speaker.position }}</p>
+            </div>
+            {% empty %}
+            <p class="text-center">Информация о спикерах скоро появится.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Место проведения -->
+<section id="location">
+    <div class="container">
+        <h2 class="text-center mb-5">Место проведения</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Адрес</h4>
+                <p>Кронверкский проспект, д.49, лит. А, г. Санкт-Петербург</p>
+                <p>Университет ИТМО</p>
+            </div>
+            <div class="col-md-6">
+                <!-- Сюда можно вставить карту, например, с Яндекс.Карт -->
+                <p><em>(Здесь будет карта)</em></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Анкета участника -->
+<section id="register" class="bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="text-center mb-4">Анкета участника</h2>
+                <form method="post">
+                    {% csrf_token %} <!-- ОБЯЗАТЕЛЬНО: Защита от CSRF-атак -->
+
+                    {{ form.as_p }} <!-- Django сам отрисует все поля формы -->
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Контакты -->
+<footer id="contacts" class="py-5 bg-dark text-white">
+    <div class="container text-center">
+        <h4>Контакты</h4>
+        <p>Если у вас есть вопросы, свяжитесь с нами:</p>
+        <p>Email: csn@itmo.ru | Telegram: @sno_itmo</p>
+    </div>
+</footer>
+
+<!-- Подключаем скрипты Bootstrap для работы интерактивных элементов (меню, аккордеон) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
