@@ -15,8 +15,6 @@ def main_page(request):
 
     speakers = Speaker.objects.all()
     program_modules = ProgramModule.objects.order_by('order')
-
-    # Получаем первую (и единственную) запись с настройками
     site_settings = SiteSettings.objects.first()
 
     context = {

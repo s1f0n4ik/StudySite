@@ -142,7 +142,6 @@
             </div>
             <div class="col-md-7">
                 {% if settings.map_latitude and settings.map_longitude %}
-                    <!-- Этот div станет картой -->
                     <div id="yandex-map" style="width: 100%; height: 400px;" class="shadow-sm rounded"></div>
                 {% else %}
                     <p><em>Карта скоро появится...</em></p>
@@ -152,14 +151,13 @@
     </div>
 </section>
 
-<!-- Анкета участника -->
 <section id="register" class="bg-light" {% if settings.section_background %} style="background: url('{{ settings.section_background.url }}') center center; background-size: cover;" {% endif %}>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <h2 class="text-center mb-5">Анкета участника</h2>
                 <form method="post" class="form-modern">
-                    {% csrf_token %} <!-- Защита от CSRF-атак -->
+                    {% csrf_token %}
 
                     {% for field in form %}
                     <div class="mb-4">
@@ -189,33 +187,23 @@
 {% if settings.map_latitude and settings.map_longitude %}
 <script src="https://api-maps.yandex.ru/2.1/?apikey={{ yandex_api_key }}&lang=ru_RU"></script>
 <script>
-    // Ждем, пока API карт загрузится
     ymaps.ready(init);
 
     function init() {
-        // Создание экземпляра карты и привязка его к контейнеру с id="yandex-map"
         var myMap = new ymaps.Map("yandex-map", {
-            // Координаты центра карты. Порядок: [широта, долгота]
             center: [{{ settings.map_latitude }}, {{ settings.map_longitude }}],
-            // Уровень масштабирования.
             zoom: {{ settings.map_zoom }}
         });
 
-        // Создание метки
         var myPlacemark = new ymaps.Placemark([{{ settings.map_latitude }}, {{ settings.map_longitude }}], {
-            // Текст при наведении на метку
             hintContent: 'Место проведения',
-            // Текст в балуне, который появляется при клике
             balloonContent: 'ИТМО, Кронверкский пр., 49'
         }, {
-            // Опции. Например, стандартная синяя метка.
             preset: 'islands#blueEducationIcon'
         });
 
-        // Добавляем метку на карту
         myMap.geoObjects.add(myPlacemark);
 
-        // Убираем лишние элементы управления
         myMap.controls.remove('geolocationControl');
         myMap.controls.remove('searchControl');
         myMap.controls.remove('trafficControl');
