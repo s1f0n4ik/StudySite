@@ -16,6 +16,24 @@
             object-fit: cover;
             border-radius: 50%;
         }
+        .form-modern .form-control {
+            border: none;
+            border-bottom: 1px solid #ced4da; /* Серая линия внизу */
+            border-radius: 0;
+            padding-left: 0;
+            background-color: transparent !important; /* Важно для фона */
+            box-shadow: none; /* Убираем тень при фокусе */
+        }
+
+        .form-modern .form-control:focus {
+            border-bottom: 1px solid #0d6efd; /* Синяя линия при фокусе */
+        }
+
+        .form-modern .form-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #6c757d;
+        }
     </style>
 </head>
 <body>
@@ -114,13 +132,18 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <h2 class="text-center mb-4">Анкета участника</h2>
-                <form method="post">
-                    {% csrf_token %} <!-- ОБЯЗАТЕЛЬНО: Защита от CSRF-атак -->
+                <h2 class="text-center mb-5">Анкета участника</h2>
+                <form method="post" class="form-modern">
+                    {% csrf_token %} <!-- Защита от CSRF-атак -->
 
-                    {{ form.as_p }} <!-- Django сам отрисует все поля формы -->
+                    {% for field in form %}
+                    <div class="mb-4">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
 
-                    <div class="d-grid">
+                    <div class="d-grid mt-5">
                         <button type="submit" class="btn btn-primary btn-lg">Отправить</button>
                     </div>
                 </form>
@@ -129,7 +152,6 @@
     </div>
 </section>
 
-<!-- Контакты -->
 <footer id="contacts" class="py-5 bg-dark text-white">
     <div class="container text-center">
         <h4>Контакты</h4>
@@ -138,7 +160,6 @@
     </div>
 </footer>
 
-<!-- Подключаем скрипты Bootstrap для работы интерактивных элементов (меню, аккордеон) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
