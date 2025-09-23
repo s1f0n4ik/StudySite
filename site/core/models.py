@@ -45,3 +45,14 @@ class Participant(models.Model):
         verbose_name = "Участник"
         verbose_name_plural = "Участники"
         ordering = ['-registered_at']
+
+class SiteSettings(models.Model):
+    header_background = models.ImageField(upload_to='backgrounds/', verbose_name="Фон для главного блока", blank=True, null=True)
+    section_background = models.ImageField(upload_to='backgrounds/', verbose_name="Фон для светлых секций", blank=True, null=True)
+
+    def __str__(self):
+        return "Настройки сайта"
+
+    class Meta:
+        verbose_name = "Настройки сайта"
+        verbose_name_plural = "Настройки сайта"
