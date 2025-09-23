@@ -126,3 +126,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Настройки для медиафайлов
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+YANDEX_MAPS_API_KEY = 'd990af35-9ec4-4466-91ad-695bf2b162b5'

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Speaker, ProgramModule, SiteSettings  # <-- Добавили
+from .models import Speaker, ProgramModule, SiteSettings
+from django.conf import settings
 from .forms import ParticipantForm
 
 
@@ -22,7 +23,8 @@ def main_page(request):
         'speakers': speakers,
         'program_modules': program_modules,
         'form': form,
-        'settings': site_settings,  # <-- Передаем настройки в контекст
+        'settings': site_settings,
+        'yandex_api_key': settings.YANDEX_MAPS_API_KEY,
     }
 
     return render(request, 'core/index.html', context)

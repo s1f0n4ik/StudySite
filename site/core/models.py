@@ -49,6 +49,12 @@ class Participant(models.Model):
 class SiteSettings(models.Model):
     header_background = models.ImageField(upload_to='backgrounds/', verbose_name="Фон для главного блока", blank=True, null=True)
     section_background = models.ImageField(upload_to='backgrounds/', verbose_name="Фон для светлых секций", blank=True, null=True)
+    map_latitude = models.FloatField(verbose_name="Широта центра карты", blank=True, null=True,
+                                     help_text="Например: 59.969240")
+    map_longitude = models.FloatField(verbose_name="Долгота центра карты", blank=True, null=True,
+                                      help_text="Например: 30.316317")
+    map_zoom = models.PositiveSmallIntegerField(verbose_name="Масштаб карты", default=16,
+                                                help_text="Значение от 1 до 19. Оптимально: 16-17.")
 
     def __str__(self):
         return "Настройки сайта"
